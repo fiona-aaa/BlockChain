@@ -1,6 +1,8 @@
 https://www.blockchain.com/btc-testnet/tx/8e087aa8922a1c27e5623f47bffb679e93a83c9044a7771c3fb262769ade8333
 
 要查询某个tx的信息，只要将以上网址最后的一串数改成你需要查询的tx值就可以。
+参考网站：
+如何使用 BTC 区块浏览器 blockchain.info 查询 BTC 交易信息?https://www.jb51.net/blockchain/801420.html
 
 我第一次实验分割成5份的tx（用了第0个和第1个，其他的还可以用）：#平均每份0.0001
 8e087aa8922a1c27e5623f47bffb679e93a83c9044a7771c3fb262769ade8333
