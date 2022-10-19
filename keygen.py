@@ -6,6 +6,6 @@ from bitcoin.wallet import CBitcoinSecret, P2PKHBitcoinAddress
 SelectParams('testnet')
 
 seckey = CBitcoinSecret.from_secret_bytes(urandom(32))
-
+print("bank:")
 print("Private key: %s" % seckey)
 print("Address: %s" % P2PKHBitcoinAddress.from_pubkey(seckey.pub))

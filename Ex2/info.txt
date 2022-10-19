@@ -1,0 +1,119 @@
+customer1:
+Private key: cVZHPdsDGGd9Wmry1ZfM4vjY32v11GR6E4wsfSp2eWRGTWYZkLXn
+Address: n2UysqiJqvevmMZUJrx6UbQt2WbC3zbzdd
+customer2:
+Private key: cT6L7ZvQS9vW68psjxpHe4VBThbrjWFNpVR3Mhe969E5zR9LiNJ8
+Address: mxULDWcGCyRXNWnaeZKLVSoZ2RbtGSoSzv
+
+customer3:
+Private key: cVGGcfbchQ6aUmzq4NTHzjvnC7t6vmVovG1uU85rT8uuwiUr7d8u
+Address: mruEuH27eRcJUkXLxxDcuWvSdJdzwwfW58
+
+bank:
+Private key: cUxDQ1ee6T9v58D5NVwURNsYT5iX6thnrHYDTw8feAxCodsntgD1
+Address: miKKt2KFuVN7SxjYGNndBVMQLTJddNz1zt
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ex2a.py运行结果
+E:\venvs\work\Scripts\python.exe F:/workspace/pycharmProjects/BlockChain/Ex2/ex2a.py
+201 Created
+{
+  "tx": {
+    "block_height": -1,
+    "block_index": -1,
+    "hash": "e49cf24d3cf443bd31b077b97f9a810dcc8aa88160070b1f82e4ccc07df1d267",
+    "addresses": [
+      "n1JVQ2NiM9pu8oMpaocjooq6AJrwiMC13N",
+      "zFLCdon25wGxhcQS4ScPTz2F2htodGNUgx"
+    ],
+    "total": 8000,
+    "fees": 2000,
+    "size": 306,
+    "vsize": 306,
+    "preference": "low",
+    "relayed_by": "2001:250:401:6571:f0cd:7bfa:757a:d86b",
+    "received": "2022-10-19T12:12:28.514464828Z",
+    "ver": 1,
+    "double_spend": false,
+    "vin_sz": 1,
+    "vout_sz": 1,
+    "confirmations": 0,
+    "inputs": [
+      {
+        "prev_hash": "8e087aa8922a1c27e5623f47bffb679e93a83c9044a7771c3fb262769ade8333",
+        "output_index": 1,
+        "script": "47304402206ab34339e0c9a0db26d6fe6b67bb55227cde8fd274619d0a1d93f31c53c4ef220220168b5216dfe1ab6633a9b0b12260ba4de79e16786c16b517fce895c635e0a5c1012103a9d4736d001d382bede6c181cd128734499485d769a51e217a33578b755e24a0",
+        "output_value": 10000,
+        "sequence": 4294967295,
+        "addresses": [
+          "n1JVQ2NiM9pu8oMpaocjooq6AJrwiMC13N"
+        ],
+        "script_type": "pay-to-pubkey-hash",
+        "age": 2350573
+      }
+    ],
+    "outputs": [
+      {
+        "value": 8000,
+        "script": "2103a9d4736d001d382bede6c181cd128734499485d769a51e217a33578b755e24a0ad512103640e00c8a9958a538fe43fbedfbc6ab840a782b420d482fe2776bb70d74a3ca82102d6991c986881c723af0c583c24b60ce7b9c054fa4a95462b3e645e1d2b7744772102accd54b4c0880b6a0dfe19d22d5215a124a15f37c2df9ef6c1fd393ce66c2ec453ae",
+        "addresses": [
+          "zFLCdon25wGxhcQS4ScPTz2F2htodGNUgx"
+        ],
+        "script_type": "pay-to-multi-pubkey-hash"
+      }
+    ]
+  }
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ex2b运行结果
+E:\venvs\work\Scripts\python.exe F:/workspace/pycharmProjects/BlockChain/Ex2/ex2b.py
+201 Created
+{
+  "tx": {
+    "block_height": -1,
+    "block_index": -1,
+    "hash": "2bb06a56c9c843a2067d30387c3d14cfed13b7ac5cb88d0fd4ea7218b1068a60",
+    "addresses": [
+      "mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB",
+      "zFLCdon25wGxhcQS4ScPTz2F2htodGNUgx"
+    ],
+    "total": 6000,
+    "fees": 2000,
+    "size": 232,
+    "vsize": 232,
+    "preference": "low",
+    "relayed_by": "2001:250:401:6571:f0cd:7bfa:757a:d86b",
+    "received": "2022-10-19T12:14:13.811547463Z",
+    "ver": 1,
+    "double_spend": false,
+    "vin_sz": 1,
+    "vout_sz": 1,
+    "confirmations": 0,
+    "inputs": [
+      {
+        "prev_hash": "e49cf24d3cf443bd31b077b97f9a810dcc8aa88160070b1f82e4ccc07df1d267",
+        "output_index": 0,
+        "script": "00483045022100c8fcbccb20b9a5a335a181af13a54bfe9ed52d5045c5e1b4f9856dbc327ceb220220785b8772fb17105092e6073831a27813d75d528cefeeefe5e3da40b6f4f855650148304502210099d898f7a10b6187637cf53e29299f44040af45b1d34e87396bccdc31f59014902204b108704b3ee8a4d2d59644a65f63841603be77151dd37be83c14d2d5c5ecd3901",
+        "output_value": 8000,
+        "sequence": 4294967295,
+        "addresses": [
+          "zFLCdon25wGxhcQS4ScPTz2F2htodGNUgx"
+        ],
+        "script_type": "pay-to-multi-pubkey-hash",
+        "age": 0
+      }
+    ],
+    "outputs": [
+      {
+        "value": 6000,
+        "script": "76a9149f9a7abd600c0caa03983a77c8c3df8e062cb2fa88ac",
+        "addresses": [
+          "mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      }
+    ]
+  }
+}
+
+进程已结束,退出代码0
+

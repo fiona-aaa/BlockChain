@@ -1,6 +1,6 @@
 from bitcoin.core.script import *
-from utils import *
-from config import (my_private_key, my_public_key, my_address,
+from Ex1.utils import *
+from Ex1.config import (my_private_key, my_public_key, my_address,
                     faucet_address)
 
 
