@@ -40,7 +40,7 @@ ex2a_txout_scriptPubKey = [bank_public_key, # 银行公钥
  ```
  * 参数的设置
   我使用的是实验一split_test_coins.py分割的比特币，在实验一中，我将0.0005的比特币分了5份。
-  在实验一中我使用了第0份，这里我继续使用第1份，所以index为1。
+  在实验一中我使用了第1份，这里我继续使用第2份，所以index为1。
  ```python
 amount_to_send = 0.00008 # 平均每份0.0001，这里要略小于它
 txid_to_spend = ('8e087aa8922a1c27e5623f47bffb679e93a83c9044a7771c3fb262769ade8333')
