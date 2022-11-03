@@ -47,3 +47,50 @@ E:\venvs\work\Scripts\python.exe F:/workspace/pycharmProjects/BlockChain/Ex3/ex3
 
 进程已结束,退出代码0
 ==============================================================================================
+E:\venvs\work\Scripts\python.exe F:/workspace/pycharmProjects/BlockChain/Ex3/ex3b.py
+201 Created
+{
+  "tx": {
+    "block_height": -1,
+    "block_index": -1,
+    "hash": "81555a3189e24198db4b9b6d0e35d18a480e99b12bf5acf7db39641531d7e187",
+    "addresses": [
+      "mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"
+    ],
+    "total": 8000,
+    "fees": 1000,
+    "size": 91,
+    "vsize": 91,
+    "preference": "low",
+    "relayed_by": "2001:250:401:6562:159e:ed3d:cf84:e76c",
+    "received": "2022-11-03T13:42:48.3067036Z",
+    "ver": 1,
+    "double_spend": false,
+    "vin_sz": 1,
+    "vout_sz": 1,
+    "confirmations": 0,
+    "inputs": [
+      {
+        "prev_hash": "5712a6f8c7b5da326e5832ae01cce5a83ae8b8be393950a2309c58b7e77998ba",
+        "output_index": 0,
+        "script": "024105029b02",
+        "output_value": 9000,
+        "sequence": 4294967295,
+        "script_type": "unknown",
+        "age": 0
+      }
+    ],
+    "outputs": [
+      {
+        "value": 8000,
+        "script": "76a9149f9a7abd600c0caa03983a77c8c3df8e062cb2fa88ac",
+        "addresses": [
+          "mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"
+        ],
+        "script_type": "pay-to-pubkey-hash"
+      }
+    ]
+  }
+}
+
+进程已结束,退出代码0

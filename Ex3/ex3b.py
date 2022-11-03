@@ -10,7 +10,8 @@ from ex3a import ex3a_txout_scriptPubKey
 # set these parameters correctly
 # ex3a.py 是 amount_to_send = 0.00009，这里要比它少一点
 amount_to_send = 0.00008
-txid_to_spend = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+# ex3a.py 输出的 hash
+txid_to_spend = '5712a6f8c7b5da326e5832ae01cce5a83ae8b8be393950a2309c58b7e77998ba'
 utxo_index = 0
 ######################################################################
 
