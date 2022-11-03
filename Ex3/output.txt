@@ -1,0 +1,49 @@
+E:\venvs\work\Scripts\python.exe F:/workspace/pycharmProjects/BlockChain/Ex3/ex3a.py
+201 Created
+{
+  "tx": {
+    "block_height": -1,
+    "block_index": -1,
+    "hash": "5712a6f8c7b5da326e5832ae01cce5a83ae8b8be393950a2309c58b7e77998ba",
+    "addresses": [
+      "n1JVQ2NiM9pu8oMpaocjooq6AJrwiMC13N"
+    ],
+    "total": 9000,
+    "fees": 1000,
+    "size": 177,
+    "vsize": 177,
+    "preference": "low",
+    "relayed_by": "2001:250:401:6562:159e:ed3d:cf84:e76c",
+    "received": "2022-11-03T13:33:35.784470756Z",
+    "ver": 1,
+    "double_spend": false,
+    "vin_sz": 1,
+    "vout_sz": 1,
+    "confirmations": 0,
+    "inputs": [
+      {
+        "prev_hash": "8e087aa8922a1c27e5623f47bffb679e93a83c9044a7771c3fb262769ade8333",
+        "output_index": 2,
+        "script": "4730440220291bd811e871652c6f1b030ae6512578b82f4425d3a39e224085ae9f9798806d022018b9122f7e152f1f64ed47fa13771d9453a599e6526eaa1317f4cd7a109b4609012103a9d4736d001d382bede6c181cd128734499485d769a51e217a33578b755e24a0",
+        "output_value": 10000,
+        "sequence": 4294967295,
+        "addresses": [
+          "n1JVQ2NiM9pu8oMpaocjooq6AJrwiMC13N"
+        ],
+        "script_type": "pay-to-pubkey-hash",
+        "age": 2350573
+      }
+    ],
+    "outputs": [
+      {
+        "value": 9000,
+        "script": "6e9302dc07889402a60287",
+        "addresses": null,
+        "script_type": "unknown"
+      }
+    ]
+  }
+}
+
+进程已结束,退出代码0
+==============================================================================================
