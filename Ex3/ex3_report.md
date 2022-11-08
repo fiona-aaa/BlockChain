@@ -25,7 +25,7 @@ ex3a_txout_scriptPubKey = [OP_2DUP, OP_ADD, 2012, OP_EQUALVERIFY, OP_SUB, 678, O
 * 2012
   我学号的前四位
 * OP_EQUALVERIFY
-  判断x + y是否等于2012
+  判断x + y是否等于2012。如果不等，整个脚本就执行失败，如果相等，会继续执行
 * OP_SUB
   计算x - y
 * 678
@@ -136,4 +136,3 @@ ex3a_txout_scriptPubKey = [OP_2DUP, OP_ADD, 2012, OP_EQUALVERIFY, OP_SUB, 678, O
  ![](images/2022-11-03-22-10-20.png)
  ##### ex3b.py的截图
  ![](images/2022-11-03-22-09-39.png)
-
