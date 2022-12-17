@@ -16,7 +16,65 @@ var GENESIS = '0x000000000000000000000000000000000000000000000000000000000000000
 
 // This is the ABI for your contract (get it from Remix, in the 'Compile' tab)
 // ============================================================
-var abi = []; // FIXME: fill this in with your contract's ABI
+var abi = [
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "creditor",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "debtor",
+					"type": "address"
+				},
+				{
+					"internalType": "uint32",
+					"name": "amount",
+					"type": "uint32"
+				},
+				{
+					"internalType": "address[]",
+					"name": "path",
+					"type": "address[]"
+				},
+				{
+					"internalType": "uint32",
+					"name": "min_on_cycle",
+					"type": "uint32"
+				}
+			],
+			"name": "add_IOU",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "debtor",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "creditor",
+					"type": "address"
+				}
+			],
+			"name": "lookup",
+			"outputs": [
+				{
+					"internalType": "uint32",
+					"name": "ret",
+					"type": "uint32"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	]; // FIXME: fill this in with your contract's ABI
 // ============================================================
 abiDecoder.addABI(abi);
 // call abiDecoder.decodeMethod to use this - see 'getAllFunctionCalls' for more
@@ -24,8 +82,8 @@ abiDecoder.addABI(abi);
 // Reads in the ABI
 var BlockchainSplitwiseContractSpec = web3.eth.contract(abi);
 
-// This is the address of the contract you want to connect to; copy this from Remix
-var contractAddress = '0x??????????????????????????????????????????????????????' // FIXME: fill this in with your contract's address/hash
+// This is the address of the contract you want to connect to; copy this from Remie
+var contractAddress = '0xCd40f5c14B340f81173fED19303a26a9a75cE034' // FIXME: fill this in with your contract's address/hash
 
 var BlockchainSplitwise = BlockchainSplitwiseContractSpec.at(contractAddress)
 
@@ -35,6 +93,51 @@ var BlockchainSplitwise = BlockchainSplitwiseContractSpec.at(contractAddress)
 // =============================================================================
 
 // TODO: Add any helper functions here!
+function getCallData(extractor_fn, early_stop_fn) {
+	const results = new Set();
+	const all_calls = getAllFunctionCalls(contractAddress, 'add_IOU', early_stop_fn);
+	for (var i = 0; i < all_calls.length; i++) {
+		const extracted_values = extractor_fn(all_calls[i]);
+		for (var j = 0; j < extracted_values.length; j++) {
+			results.add(extracted_values[j]);
+		}
+	}
+	return Array.from(results);
+}
+// 得到所有借账人
+function getCreditors() {
+	return getCallData((call) => {
+		
+		return [call.args[0]];//这是借账的
+	}, /*early_stop_fn=*/null);
+}
+// Get neighbors. Returns all neighbors of the given user (eg, people this user)
+// owes money to.
+function getCreditorsForUser(user) {
+	var creditors = []
+	const all_creditors = getCreditors()
+	for (var i = 0; i < all_creditors.length; i++) {
+		const amountOwed = BlockchainSplitwise.lookup(user, all_creditors[i]).toNumber();
+		if (amountOwed > 0) {
+			creditors.push(all_creditors[i])
+		}
+	}
+	return creditors;
+}
+
+// 查找最短的路径（bfs）
+function findmino(path) {
+	var minOwed = null;
+	for (var i = 1; i < path.length; i++) {
+		const debtor = path[i-1]
+		const creditor = path[i];
+		const amountOwed = BlockchainSplitwise.lookup(debtor, creditor).toNumber();
+		if (minOwed == null || minOwed > amountOwed) {
+			minOwed = amountOwed;
+		}
+	}
+	return minOwed;
+}
 
 // TODO: Return a list of all users (creditors or debtors) in the system
 // You can return either:
