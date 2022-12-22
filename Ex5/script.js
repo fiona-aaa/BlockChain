@@ -1,7 +1,17 @@
 // =============================================================================
 //                                  Config 
 // =============================================================================
+/*web3未定义解决
+// 实例化web3
+if (typeof web3 !== 'undefined') { 
+	web3 = new Web3(web3.currentProvider);
+	} else {
+	// set the provider you want from Web3.providers
+	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8546"));
+}
+console.log("web3:"+web3); //然后再输出web3
 
+*/ 
 // sets up web3.js
 if (typeof web3 !== 'undefined')  {
 	web3 = new Web3(web3.currentProvider);
@@ -87,8 +97,9 @@ abiDecoder.addABI(abi);
 var BlockchainSplitwiseContractSpec = web3.eth.contract(abi);
 
 // This is the address of the contract you want to connect to; copy this from Remie
-var contractAddress = '0xd9145CCE52D386f254917e481eB44e9943F39138' // FIXME: fill this in with your contract's address/hash
+var contractAddress = '0x469D6232D7D480A9203CC11C5ef0D1A9037bFD15' // FIXME: fill this in with your contract's address/hash
 
+//0xd9145CCE52D386f254917e481eB44e9943F39138
 var BlockchainSplitwise = BlockchainSplitwiseContractSpec.at(contractAddress)
 
 
