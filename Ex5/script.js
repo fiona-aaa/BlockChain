@@ -28,7 +28,6 @@ var GENESIS = '0x000000000000000000000000000000000000000000000000000000000000000
 // ============================================================
 var abi =[
 	{
-		"constant": false,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -36,34 +35,111 @@ var abi =[
 				"type": "address"
 			},
 			{
+				"internalType": "uint32",
+				"name": "amount",
+				"type": "uint32"
+			}
+		],
+		"name": "add_IOU",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "a",
+				"type": "address"
+			}
+		],
+		"name": "get_last_active",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "debtor",
+				"type": "address"
+			}
+		],
+		"name": "getCountNeighbors",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCountUser",
+		"outputs": [
+			{
+				"internalType": "uint32",
+				"name": "",
+				"type": "uint32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "debtor",
 				"type": "address"
 			},
 			{
 				"internalType": "uint32",
-				"name": "amount",
-				"type": "uint32"
-			},
-			{
-				"internalType": "address[]",
-				"name": "path",
-				"type": "address[]"
-			},
-			{
-				"internalType": "uint32",
-				"name": "min_on_cycle",
+				"name": "index",
 				"type": "uint32"
 			}
 		],
-		"name": "add_IOU",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
+		"name": "getNeighbor",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint32",
+				"name": "index",
+				"type": "uint32"
+			}
+		],
+		"name": "getUser",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -80,11 +156,10 @@ var abi =[
 		"outputs": [
 			{
 				"internalType": "uint32",
-				"name": "ret",
+				"name": "",
 				"type": "uint32"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	}
@@ -97,7 +172,7 @@ abiDecoder.addABI(abi);
 var BlockchainSplitwiseContractSpec = web3.eth.contract(abi);
 
 // This is the address of the contract you want to connect to; copy this from Remie
-var contractAddress = '0x469D6232D7D480A9203CC11C5ef0D1A9037bFD15' // FIXME: fill this in with your contract's address/hash
+var contractAddress = '0x4bFbf2462a8C28f133ca426521dd3d7098694701' // FIXME: fill this in with your contract's address/hash
 
 //0xd9145CCE52D386f254917e481eB44e9943F39138
 var BlockchainSplitwise = BlockchainSplitwiseContractSpec.at(contractAddress)
@@ -108,90 +183,39 @@ var BlockchainSplitwise = BlockchainSplitwiseContractSpec.at(contractAddress)
 // =============================================================================
 
 // TODO: Add any helper functions here!
-function getCallData(extractor_fn, early_stop_fn) {
-	const results = new Set();
-	const all_calls = getAllFunctionCalls(contractAddress, 'add_IOU', early_stop_fn);
-	for (var i = 0; i < all_calls.length; i++) {
-		const extracted_values = extractor_fn(all_calls[i]);
-		for (var j = 0; j < extracted_values.length; j++) {
-			results.add(extracted_values[j]);
-		}
-	}
-	return Array.from(results);
-}
-// 得到所有借账人
-function getCreditors() {
-	return getCallData((call) => {
-		
-		return [call.args[0]];//这是借账的
-	}, /*early_stop_fn=*/null);
-}
-// Get neighbors. Returns all neighbors of the given user (eg, people this user)
-// owes money to.
-function getCreditorsForUser(user) {
-	var creditors = []
-	const all_creditors = getCreditors()
-	for (var i = 0; i < all_creditors.length; i++) {
-		const amountOwed = BlockchainSplitwise.lookup(user, all_creditors[i]).toNumber();
-		if (amountOwed > 0) {
-			creditors.push(all_creditors[i])
-		}
-	}
-	return creditors;
-}
-
-// 查找最短的路径（bfs）
-function findmino(path) {
-	var minOwed = null;
-	for (var i = 1; i < path.length; i++) {
-		const debtor = path[i-1]
-		const creditor = path[i];
-		const amountOwed = BlockchainSplitwise.lookup(debtor, creditor).toNumber();
-		if (minOwed == null || minOwed > amountOwed) {
-			minOwed = amountOwed;
-		}
-	}
-	return minOwed;
-}
-
 // TODO: Return a list of all users (creditors or debtors) in the system
 // You can return either:
 //   - a list of everyone who has ever sent or received an IOU
 // OR
 //   - a list of everyone currently owing or being owed money
 function getUsers() {
-	return getCallData((call) => {
-		return [call.from, call.args[0]]
-	}, //early_stop_fn=
-	null);
+	var all_users = [];
+    var count_users = BlockchainSplitwise.getCountUser.call();
+    while(count_users > 0){
+        all_users.push(BlockchainSplitwise.getUser.call(count_users - 1));
+        count_users -= 1;
+    }
+    return all_users;
 }
 
 // TODO: Get the total amount owed by the user specified by 'user'
 function getTotalOwed(user) {
-	// We assume lookup is up-to-date (all cycles removed).
-	var totalOwed = 0;
-	const all_creditors = getCreditors();
-	for (var i = 0; i < all_creditors.length; i++) {
-		totalOwed += BlockchainSplitwise.lookup(user, all_creditors[i]).toNumber();
-	}
-	return totalOwed;
+	var count_neighbors = BlockchainSplitwise.getCountNeighbors.call(user);
+    var neighbor;
+    var total = 0;
+    while(count_neighbors > 0){
+        neighbor = BlockchainSplitwise.getNeighbor.call(user, count_neighbors - 1);
+        total += BlockchainSplitwise.lookup.call(web3.eth.defaultAccount, neighbor) * 1;
+        count_neighbors -= 1;
+    }
+    return total;
 }
 
 // TODO: Get the last time this user has sent or received an IOU, in seconds since Jan. 1, 1970
 // Return null if you can't find any activity for the user.
 // HINT: Try looking at the way 'getAllFunctionCalls' is written. You can modify it if you'd like.
 function getLastActive(user) {
-	const all_timestamps = getCallData((call) => {
-		if (call.from == user || call.args[0] == user) {
-			return [call.timestamp];
-		}
-		return [];
-	}, (call) => {
-		// 找到直接返回
-		return call.from == user || call.args[0] == user;
-	});
-	return Math.max(all_timestamps);
-
+	return BlockchainSplitwise.get_last_active.call(user);
 
 }
 
@@ -199,17 +223,28 @@ function getLastActive(user) {
 // The person you owe money is passed as 'creditor'
 // The amount you owe them is passed as 'amount'
 function add_IOU(creditor, amount) {
-	const debtor = web3.eth.defaultAccount;
-	const path = doBFS(creditor, debtor, getCreditorsForUser);
-	if (path != null) {
-		const min_on_cycle = Math.min(findmino(path), amount);
-		return BlockchainSplitwise.add_IOU(creditor, amount, path, min_on_cycle);
-	}
-	// 没有借账环，直接添加就行
-	var x = BlockchainSplitwise.add_IOU(creditor, amount, [], //min_on_cycle=
-		0);
-	return;
-
+	var path = doBFS(creditor, web3.eth.defaultAccount, getNeighbors);
+    log("path", path);
+    if(path === null){
+        BlockchainSplitwise.add_IOU.sendTransaction(creditor, amount, {gasPrice : 2000, gas : 500000});
+    }else{
+        var min_edge = amount;
+        var i = 1;
+        while(i < path.length){
+            var edge = BlockchainSplitwise.lookup.call(path[i - 1], path[i]) * 1;
+            if(min_edge > edge){
+                min_edge = edge;
+            }
+            i += 1;
+        }
+        log("min_edge", min_edge);
+        i = path.length;
+        while(i > 0){
+            BlockchainSplitwise.add_IOU.sendTransaction(path[i - 1], min_edge, {from : path[i], gasPrice : 2000, gas : 500000});
+            i -= 1;
+        }
+        BlockchainSplitwise.add_IOU.sendTransaction(creditor, amount - min_edge, {gasPrice : 2000, gas : 500000});
+    }
 }
 
 // =============================================================================
